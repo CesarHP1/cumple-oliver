@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>¡Mi Primer Añito! | Oliver</title>
-    
+   
     <!-- Fuentes de Google -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Loved+by+the+King&family=Pacifico&family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
-    
+   
     <style>
         /* =========================================
            1. VARIABLES GENERALES Y CONFIGURACIÓN
@@ -19,7 +19,6 @@
             --text-color: #1a365d;
             --liquid-color: rgba(79, 172, 254, 0.6);
         }
-
         html, body {
             margin: 0;
             padding: 0;
@@ -27,7 +26,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
         /* =========================================
            FONDO DINÁMICO MULTICOLOR (MÁS COLORES)
         ========================================= */
@@ -37,28 +35,24 @@
             align-items: center;
             font-family: 'Roboto Condensed', sans-serif;
             perspective: 1200px;
-            /* Se agregaron más colores: Verde agua, azules, rosas y lavandas */
             background: linear-gradient(
-                -45deg, 
+                -45deg,
                 #89f7fe, /* Verde Agua / Cian */
                 #66a6ff, /* Azul vivo */
                 #ffb199, /* Rosa suave / Durazno */
                 #fbc2eb, /* Rosa mágico */
                 #a18cd1, /* Lavanda / Morado suave */
                 #a8edea, /* Menta / Verde agua claro */
-                #00f2fe  /* Azul brillante */
+                #00f2fe /* Azul brillante */
             );
             background-size: 600% 600%;
-            /* Animación suave que cambia los colores infinitamente */
             animation: gradientBG 25s ease infinite;
         }
-
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-
         /* Contenedor fijo para que las partículas no dañen el scroll */
         #effects-container {
             position: fixed;
@@ -70,7 +64,6 @@
             overflow: hidden;
             z-index: 1;
         }
-
         /* =========================================
            2. NUEVA ANIMACIÓN DE CARGA (LOADER ÉPICO)
         ========================================= */
@@ -89,15 +82,13 @@
             animation: fadeLoader 2.5s forwards;
             overflow: hidden;
         }
-
-        /* Esfera líquida 3D */
         .loader-orb {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             border: 5px solid var(--primary-color);
-            box-shadow: 
-                0 0 30px rgba(79, 172, 254, 0.8), 
+            box-shadow:
+                0 0 30px rgba(79, 172, 254, 0.8),
                 inset 0 0 30px rgba(0, 242, 254, 0.8);
             position: relative;
             overflow: hidden;
@@ -107,8 +98,6 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.3);
         }
-
-        /* El líquido que llena la esfera */
         .loader-liquid {
             position: absolute;
             bottom: -50%;
@@ -121,14 +110,11 @@
             opacity: 0.8;
             z-index: 1;
         }
-
-        /* Koala flotando dentro del líquido */
         .loader-koala {
             font-size: 4em;
             z-index: 2;
             animation: bounceInLiquid 1.5s infinite ease-in-out;
         }
-
         .loader-text {
             font-family: 'Pacifico', cursive;
             font-size: 2.5em;
@@ -138,8 +124,6 @@
             z-index: 2;
             letter-spacing: 2px;
         }
-
-        /* Iconos de carga flotando por la pantalla */
         .baby-icons {
             position: absolute;
             width: 100vw;
@@ -149,7 +133,6 @@
             pointer-events: none;
             z-index: 1;
         }
-
         .baby-icon {
             position: absolute;
             opacity: 0;
@@ -157,9 +140,8 @@
             animation: floatUpScreen 2.5s ease-in forwards;
             bottom: -10%;
         }
-
         /* =========================================
-           3. ONDAS DE OCÉANO EN EL FONDO (BACKGROUND)
+           3. ONDAS DE OCÉANO EN EL FONDO
         ========================================= */
         .ocean {
             height: 30vh;
@@ -172,7 +154,6 @@
             pointer-events: none;
             overflow: hidden;
         }
-
         .wave {
             background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ffffff" fill-opacity="0.2"/></svg>') repeat-x;
             position: absolute;
@@ -182,16 +163,14 @@
             animation: wave 10s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
             transform: translate3d(0, 0, 0);
         }
-
         .wave:nth-of-type(2) {
             top: 10px;
             animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
             opacity: 0.5;
             background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ffffff" fill-opacity="0.4"/></svg>') repeat-x;
         }
-
         /* =========================================
-           4. TARJETA CRISTAL LÍQUIDO (GLASSMORPHISM)
+           4. TARJETA CRISTAL LÍQUIDO
         ========================================= */
         .card-container {
             position: relative;
@@ -204,11 +183,10 @@
             box-sizing: border-box;
             perspective: 1200px;
         }
-
         .invitation-card {
             position: relative;
             width: 100%;
-            min-height: 80vh; 
+            min-height: 80vh;
             background: linear-gradient(
                 145deg,
                 rgba(255, 255, 255, 0.4) 0%,
@@ -217,7 +195,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border-radius: 25px;
-            box-shadow: 
+            box-shadow:
                 0 15px 35px rgba(0, 0, 0, 0.15),
                 0 0 40px rgba(255, 255, 255, 0.5) inset,
                 0 0 15px rgba(255, 255, 255, 0.6) inset;
@@ -230,21 +208,16 @@
             flex-direction: column;
             justify-content: center;
         }
-
         .invitation-card:hover {
-            transform: 
-                rotateY(10deg) 
-                rotateX(5deg) 
-                scale(1.05) 
+            transform:
+                rotateY(10deg)
+                rotateX(5deg)
+                scale(1.05)
                 translateZ(20px);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.3), 
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.3),
                 0 0 70px rgba(255, 255, 255, 0.4) inset;
         }
-
-        /* =========================================
-           5. NUEVO EFECTO: OLAS DE AGUA DENTRO DE LA TARJETA
-        ========================================= */
         .card-water-wave {
             position: absolute;
             bottom: -150%;
@@ -259,28 +232,24 @@
             z-index: 1;
             mix-blend-mode: overlay;
         }
-
         .card-water-wave.wave-2 {
             background: rgba(79, 172, 254, 0.3);
             border-radius: 45%;
             animation-direction: reverse;
         }
-
         .invitation-card:hover .card-water-wave {
             opacity: 1;
             bottom: -80%;
             animation: spinLiquidCard 5s infinite linear;
         }
-
         .card-front {
             padding: 40px 30px;
             text-align: center;
             position: relative;
             z-index: 5;
         }
-
         /* =========================================
-           6. TÍTULO CON LETRAS INTERACTIVAS (CAFÉ DE LA IMAGEN)
+           6. TÍTULO CON LETRAS INTERACTIVAS
         ========================================= */
         .title {
             font-family: 'Dancing Script', cursive;
@@ -292,23 +261,20 @@
             -webkit-background-clip: text;
             animation: gradientShine 3s linear infinite, float 4s ease-in-out infinite;
         }
-
         .letter {
             display: inline-block;
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s, text-shadow 0.3s;
         }
-
         .letter:hover {
             transform: translateY(-20px) scale(1.4) rotate(10deg);
             color: #82410A;
-            text-shadow: 
-                0 10px 20px rgba(130, 65, 10, 0.8), 
+            text-shadow:
+                0 10px 20px rgba(130, 65, 10, 0.8),
                 0 0 15px rgba(255, 255, 255, 1);
             z-index: 10;
         }
-
         /* =========================================
-           7. TEXTOS (PÁRRAFOS)
+           7. TEXTOS
         ========================================= */
         .details {
             position: relative;
@@ -317,9 +283,8 @@
             transform: translateY(20px);
             animation: fadeIn 1.5s forwards 0.8s;
         }
-
         .detail-item {
-            position: relative; 
+            position: relative;
             margin: 25px 0;
             font-size: 1.25em;
             color: var(--text-color);
@@ -333,18 +298,15 @@
             box-shadow: none;
             font-weight: bold;
         }
-
         .detail-item:first-child {
             text-align: justify;
             text-justify: inter-word;
         }
-
         .detail-item:hover {
             transform: scale(1.05);
             color: #002244;
             text-shadow: 0 0 10px rgba(255,255,255,0.8);
         }
-
         .detail-item strong {
             color: #82410A;
             text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.9);
@@ -354,9 +316,8 @@
             margin-top: 20px;
             font-size: 1.3em;
         }
-
         /* =========================================
-           8. KOALA MÁGICO 🐨
+           8. KOALA MÁGICO
         ========================================= */
         .koala-container {
             position: relative;
@@ -367,21 +328,18 @@
             cursor: pointer;
             display: inline-block;
         }
-
         .koala {
-            font-size: 5em; 
+            font-size: 5em;
             animation: heartbeat 1.5s infinite;
             filter: drop-shadow(0 8px 15px rgba(255, 183, 3, 0.6));
             transition: all 0.3s ease;
             display: inline-block;
         }
-
         .koala:hover {
             animation: heartbeat 0.8s infinite;
             filter: drop-shadow(0 15px 30px rgba(255, 183, 3, 0.9));
             transform: scale(1.2);
         }
-
         .glow-effect {
             position: absolute;
             top: 50%;
@@ -395,9 +353,8 @@
             z-index: -1;
             pointer-events: none;
         }
-
         /* =========================================
-           9. EFECTO LÍQUIDO AL TOCAR TEXTOS (RIPPLE)
+           9. EFECTO LÍQUIDO (RIPPLE)
         ========================================= */
         .liquid-ripple {
             position: absolute;
@@ -409,15 +366,14 @@
             border: 3px solid rgba(255, 255, 255, 1);
             border-radius: 50%;
             pointer-events: none;
-            box-shadow: 
-                0 0 20px rgba(255, 255, 255, 0.9), 
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.9),
                 inset 0 0 15px rgba(79, 172, 254, 0.8);
             animation: waterDrop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             z-index: 0;
         }
-
         /* =========================================
-           10. PARTÍCULAS (CONFETI, BURBUJAS)
+           10. PARTÍCULAS
         ========================================= */
         .confetti {
             position: absolute;
@@ -430,7 +386,6 @@
             pointer-events: none;
             transition: margin 0.1s ease-out;
         }
-
         .square-effect {
             position: absolute;
             background: rgba(255, 255, 255, 0.5);
@@ -440,7 +395,6 @@
             z-index: 10;
             transition: margin 0.1s ease-out;
         }
-
         .bubble {
             position: absolute;
             bottom: -20px;
@@ -451,92 +405,48 @@
             z-index: 1;
             transition: margin 0.1s ease-out;
         }
-
         .card-click-pulse {
             animation: clickPulseEffect 0.5s ease-out;
         }
-
         /* =========================================
            11. KEYFRAMES Y ANIMACIONES
         ========================================= */
-        @keyframes fillLiquidOrb {
-            0% { bottom: -100%; }
-            100% { bottom: -10%; }
-        }
-        @keyframes spinLiquidOrb {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes bounceInLiquid {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes fillLiquidOrb { 0% { bottom: -100%; } 100% { bottom: -10%; } }
+        @keyframes spinLiquidOrb { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes bounceInLiquid { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes floatUpScreen {
             0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
             20% { opacity: 1; }
             80% { opacity: 1; }
             100% { transform: translateY(-120vh) scale(1.5) rotate(360deg); opacity: 0; }
         }
-        @keyframes fadeLoader { 
-            0%, 90% { opacity: 1; } 
-            100% { opacity: 0; visibility: hidden; } 
+        @keyframes fadeLoader { 0%, 90% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        @keyframes gradientShine { to { background-position: 200% center; } }
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg) translateX(50vw); opacity: 0; }
         }
-        @keyframes float { 
-            0%, 100% { transform: translateY(0); } 
-            50% { transform: translateY(-15px); } 
+        @keyframes fadeInOut {
+            0% { transform: scale(0) rotate(45deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(45deg); opacity: 0.8; }
+            100% { transform: scale(2) rotate(45deg); opacity: 0; }
         }
-        @keyframes fadeIn { 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+        @keyframes bubbleRise {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
-        @keyframes gradientShine {
-            to { background-position: 200% center; }
-        }
-        @keyframes confettiFall { 
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; } 
-            100% { transform: translateY(110vh) rotate(720deg) translateX(50vw); opacity: 0; } 
-        }
-        @keyframes fadeInOut { 
-            0% { transform: scale(0) rotate(45deg); opacity: 0; } 
-            50% { transform: scale(1.2) rotate(45deg); opacity: 0.8; } 
-            100% { transform: scale(2) rotate(45deg); opacity: 0; } 
-        }
-        @keyframes heartbeat { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.25); } 
-        }
-        @keyframes bubbleRise { 
-            0% { transform: translateY(0) scale(0.5); opacity: 0; } 
-            50% { opacity: 0.8; } 
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } 
-        }
-        @keyframes wave { 
-            0% { transform: translateX(0); } 
-            100% { transform: translateX(-50vw); } 
-        }
-        @keyframes swell { 
-            0%, 100% { transform: translate3d(0, -25px, 0); } 
-            50% { transform: translate3d(0, 5px, 0); } 
-        }
-        @keyframes clickPulseEffect { 
-            0% { transform: scale(1); } 
-            50% { transform: scale(0.95); box-shadow: 0 10px 20px rgba(0,0,0,0.1); } 
-            100% { transform: scale(1); } 
-        }
-        @keyframes pulseGlow { 
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } 
-            50% { transform: translate(-50%, -50%) scale(1.6); opacity: 1; } 
-        }
-        @keyframes waterDrop {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(30); opacity: 0; border-width: 0px; }
-        }
-        @keyframes spinLiquidCard {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
+        @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50vw); } }
+        @keyframes swell { 0%, 100% { transform: translate3d(0, -25px, 0); } 50% { transform: translate3d(0, 5px, 0); } }
+        @keyframes clickPulseEffect { 0% { transform: scale(1); } 50% { transform: scale(0.95); box-shadow: 0 10px 20px rgba(0,0,0,0.1); } 100% { transform: scale(1); } }
+        @keyframes pulseGlow { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.6); opacity: 1; } }
+        @keyframes waterDrop { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(30); opacity: 0; border-width: 0px; } }
+        @keyframes spinLiquidCard { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         /* =========================================
-           12. RESPONSIVE MOBILE (CELULARES)
+           12. RESPONSIVE
         ========================================= */
         @media (max-width: 600px) {
             .invitation-card { width: 95vw; min-height: 85vh; border-radius: 20px; }
@@ -548,12 +458,8 @@
     </style>
 </head>
 <body>
-
-    <!-- =========================================
-         AUDIOS MÁGICOS
-    ========================================= -->
-    <!-- Se agregó AUTOPLAY directo a la etiqueta -->
-    <audio id="bg-music" loop autoplay style="display: none;">
+    <!-- ==================== AUDIO MEJORADO ==================== -->
+    <audio id="bg-music" loop preload="auto" style="display: none;">
         <source src="musica.mp3" type="audio/mpeg">
     </audio>
     <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
@@ -561,18 +467,15 @@
     <audio id="pop-sound" src="https://assets.mixkit.co/active_storage/sfx/1114/1114-preview.mp3"></audio>
     <audio id="letter-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
 
-    <!-- ONDAS DE OCÉANO EN EL FONDO -->
+    <!-- ONDAS DE OCÉANO -->
     <div class="ocean">
         <div class="wave"></div>
         <div class="wave"></div>
     </div>
 
-    <!-- CONTENEDOR PARA LAS FÍSICAS DE CONFETI -->
     <div id="effects-container"></div>
 
-    <!-- =========================================
-         NUEVA PANTALLA DE CARGA (LOADER LÍQUIDO)
-    ========================================= -->
+    <!-- LOADER -->
     <div class="loader">
         <div class="baby-icons">
             <div class="baby-icon" style="left: 15%; animation-delay: 0s">🎈</div>
@@ -581,30 +484,20 @@
             <div class="baby-icon" style="left: 75%; animation-delay: 1.2s">🕯️</div>
             <div class="baby-icon" style="left: 90%; animation-delay: 1.6s">🎈</div>
         </div>
-        
-        <!-- Esfera central llenándose -->
         <div class="loader-orb">
             <div class="loader-liquid"></div>
             <div class="loader-koala">🐨</div>
         </div>
-        
         <div class="loader-text">Preparando la Magia...</div>
     </div>
 
-    <!-- =========================================
-         TARJETA PRINCIPAL DE INVITACIÓN
-    ========================================= -->
+    <!-- TARJETA -->
     <div class="card-container">
         <div class="invitation-card" id="main-card">
-            
-            <!-- Nuevas olas de agua que se activan al pasar el cursor -->
             <div class="card-water-wave"></div>
             <div class="card-water-wave wave-2"></div>
-
             <div class="card-front">
-                
                 <h1 class="title" id="animated-title">¡Decreto Real! Oliver</h1>
-                
                 <div class="details">
                     <div class="detail-item">
                         Estoy muy emocionado de invitarte a mi primer año de vida. Será un día lleno de magia, dulces y diversión en mi pequeño reino.
@@ -616,240 +509,173 @@
                         <strong>📍 Toca el Koala para ver la ubicación</strong>
                     </div>
                 </div>
-                
                 <div class="koala-container" onclick="openLocation(event)">
                     <div class="glow-effect"></div>
                     <div class="koala">🐨</div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- =========================================
-         JAVASCRIPT / LÓGICA E INTERACTIVIDAD
-    ========================================= -->
     <script>
-        // 1. SEPARAR EL TÍTULO PARA EFECTO LETRA POR LETRA
+        // Título animado
         const titleElement = document.getElementById('animated-title');
         const text = titleElement.innerText;
-        titleElement.innerHTML = ''; 
-        
-        for(let i = 0; i < text.length; i++) {
+        titleElement.innerHTML = '';
+        for (let i = 0; i < text.length; i++) {
             let char = text[i];
-            if(char === ' ') {
+            if (char === ' ') {
                 titleElement.innerHTML += '&nbsp;';
             } else {
                 let span = document.createElement('span');
-                span.innerText = char; 
+                span.innerText = char;
                 span.className = 'letter';
-                
                 span.addEventListener('mouseenter', () => playSound('letter-sound'));
                 span.addEventListener('touchstart', () => playSound('letter-sound'), {passive: true});
-                
                 titleElement.appendChild(span);
             }
         }
 
-        // 2. SISTEMA AGRESIVO PARA FORZAR REPRODUCCIÓN DE MÚSICA
+        // ==================== AUDIO MEJORADO ====================
         const bgMusic = document.getElementById('bg-music');
-        
-        // Función general de efectos de sonido
+
         function playSound(id) {
             const sound = document.getElementById(id);
-            if(sound) {
-                let playPromise = sound.cloneNode().play(); 
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {});
-                }
+            if (sound) {
+                const clone = sound.cloneNode();
+                clone.play().catch(() => {});
             }
         }
 
-        // Función que enciende la música principal y la mantiene en loop
-        const initAudio = () => {
+        const unlockAudio = () => {
             if (bgMusic.paused) {
-                bgMusic.play().then(() => {
-                    // Si logró reproducirse, dejamos de espiar los clics para no saturar
-                    ['click', 'touchstart', 'mousemove', 'keydown', 'scroll'].forEach(evt => {
-                        document.removeEventListener(evt, initAudio);
-                    });
-                }).catch(() => {
-                    // Si el navegador bloqueó, esperamos el siguiente clic silenciosamente
-                });
+                bgMusic.play()
+                    .then(() => console.log("🎵 Música iniciada"))
+                    .catch(() => {});
             }
         };
 
-        // Forzar arranque en cuanto cargue si el navegador lo permite
-        window.addEventListener('load', () => {
-            initAudio();
+        window.addEventListener('load', () => setTimeout(unlockAudio, 800));
+
+        ['click', 'touchstart', 'touchend', 'mousedown', 'keydown', 'scroll'].forEach(evt => {
+            document.addEventListener(evt, unlockAudio, { once: true });
         });
 
-        // Enganchar a CUALQUIER interacción del usuario para burlar el bloqueo
-        ['click', 'touchstart', 'mousemove', 'keydown', 'scroll'].forEach(evt => {
-            document.addEventListener(evt, initAudio, { once: true });
-        });
+        document.getElementById('main-card').addEventListener('click', unlockAudio);
 
-        // Si el usuario regresa del mapa, asegurar que la música siga
-        document.addEventListener("visibilitychange", () => {
-            if (!document.hidden) initAudio();
-        });
-        window.addEventListener('pageshow', () => {
-            initAudio();
-        });
-
-        // 3. REDIRECCIÓN AL MAPA CON EL KOALA
+        // Ubicación
         function openLocation(event) {
             event.stopPropagation();
             playSound('magic-sound');
-            
-            // ENLACE DE MAPS
-            const urlUbicacion = 'https://maps.app.goo.gl/iodsMFG1WRkB759k6'; 
-            
-            setTimeout(() => { 
-                window.location.href = urlUbicacion; 
-            }, 600);
+            const urlUbicacion = 'https://maps.app.goo.gl/iodsMFG1WRkB759k6';
+            setTimeout(() => window.location.href = urlUbicacion, 600);
         }
 
-        // 4. RETIRAR PANTALLA DE CARGA
+        // Quitar loader
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.querySelector('.loader').remove();
-            }, 2500); 
+            setTimeout(() => document.querySelector('.loader').remove(), 2500);
         });
 
-        // 5. GENERACIÓN DE PARTÍCULAS
+        // ==================== PARTÍCULAS Y DEMÁS FUNCIONES ====================
         function createEffects() {
             const colors = ['#4facfe', '#00f2fe', '#ffb703', '#ffffff', '#e0eafc', '#fbc2eb'];
             const container = document.getElementById('effects-container');
-            
-            // Crear Confeti y Cuadrados
             for (let i = 0; i < 70; i++) {
                 const element = document.createElement('div');
                 element.className = Math.random() > 0.4 ? 'confetti' : 'square-effect';
-                
-                if(element.className === 'confetti') {
+                if (element.className === 'confetti') {
                     element.style.left = Math.random() * 100 + 'vw';
                     element.style.animationDelay = Math.random() * 2 + 's';
                     element.style.animationDuration = (Math.random() * 2 + 3) + 's';
                     element.style.background = colors[Math.floor(Math.random() * colors.length)];
                     const size = 8 + Math.random() * 10;
-                    element.style.width = size + 'px'; 
+                    element.style.width = size + 'px';
                     element.style.height = size + 'px';
-                    if (Math.random() > 0.5) {
-                        element.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
-                    }
                 } else {
                     element.style.left = Math.random() * 100 + 'vw';
                     element.style.top = Math.random() * 100 + 'vh';
                     element.style.width = (20 + Math.random() * 30) + 'px';
                     element.style.height = element.style.width;
-                    element.style.background = 'rgba(255,255,255,0.7)';
                 }
-                
                 container.appendChild(element);
-                
-                if(element.className === 'square-effect') {
-                    setTimeout(() => element.remove(), 2500);
-                }
+                if (element.className === 'square-effect') setTimeout(() => element.remove(), 2500);
             }
-
-            // Crear Burbujas
             for (let i = 0; i < 15; i++) {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
                 bubble.style.left = Math.random() * 100 + 'vw';
                 const size = 10 + Math.random() * 25;
-                bubble.style.width = size + 'px'; 
+                bubble.style.width = size + 'px';
                 bubble.style.height = size + 'px';
                 bubble.style.animationDuration = (Math.random() * 4 + 4) + 's';
                 bubble.style.animationDelay = Math.random() * 2 + 's';
-                
                 container.appendChild(bubble);
             }
         }
 
-        // 6. MOTOR DE FÍSICAS (EL CONFETI SIGUE AL CURSOR MAGNÉTICAMENTE)
+        // Física magnética
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
         let isMouseMoving = false;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            isMouseMoving = true;
-        });
-
-        document.addEventListener('touchmove', (e) => {
-            mouseX = e.touches[0].clientX;
-            mouseY = e.touches[0].clientY;
-            isMouseMoving = true;
+        document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; isMouseMoving = true; });
+        document.addEventListener('touchmove', (e) => { 
+            mouseX = e.touches[0].clientX; 
+            mouseY = e.touches[0].clientY; 
+            isMouseMoving = true; 
         }, {passive: true});
 
         function magneticPhysicsLoop() {
-            if(isMouseMoving) {
+            if (isMouseMoving) {
                 document.querySelectorAll('.confetti, .square-effect, .bubble').forEach(el => {
                     const rect = el.getBoundingClientRect();
                     const elX = rect.left + rect.width / 2;
                     const elY = rect.top + rect.height / 2;
-                    
                     const dx = mouseX - elX;
                     const dy = mouseY - elY;
                     const distance = Math.sqrt(dx*dx + dy*dy);
-                    
-                    if(distance < 250) {
-                        const force = (250 - distance) / 250; 
-                        
+                    if (distance < 250) {
+                        const force = (250 - distance) / 250;
                         let currentMX = parseFloat(el.style.marginLeft) || 0;
                         let currentMY = parseFloat(el.style.marginTop) || 0;
-                        
                         el.style.marginLeft = (currentMX + (dx * force * 0.15)) + 'px';
                         el.style.marginTop = (currentMY + (dy * force * 0.15)) + 'px';
                     }
                 });
             }
-            requestAnimationFrame(magneticPhysicsLoop); 
+            requestAnimationFrame(magneticPhysicsLoop);
         }
-        
         magneticPhysicsLoop();
 
-        // 7. INICIAR EVENTOS GENERALES Y RIPPLES
+        // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
             createEffects();
-            
             const card = document.getElementById('main-card');
             card.addEventListener('click', function(e) {
-                if(!e.target.closest('.detail-item') && !e.target.closest('.koala-container') && !e.target.closest('.title')) {
+                if (!e.target.closest('.detail-item') && !e.target.closest('.koala-container') && !e.target.closest('.title')) {
                     playSound('pop-sound');
                     this.classList.add('card-click-pulse');
                     setTimeout(() => this.classList.remove('card-click-pulse'), 500);
                 }
             });
-
-            setInterval(() => { 
-                if (document.querySelectorAll('.confetti').length < 90) {
-                    createEffects(); 
-                }
+            setInterval(() => {
+                if (document.querySelectorAll('.confetti').length < 90) createEffects();
             }, 3000);
         });
 
-        // 8. EFECTO AGUA REALISTA AL HACER CLIC EN LOS PÁRRAFOS
+        // Ripple en textos
         document.querySelectorAll('.detail-item').forEach(item => {
             item.addEventListener('click', e => {
                 e.stopPropagation();
                 playSound('click-sound');
-                
                 const rect = item.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
                 const ripple = document.createElement('div');
                 ripple.className = 'liquid-ripple';
                 ripple.style.left = x + 'px';
                 ripple.style.top = y + 'px';
-                
                 item.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 800); 
+                setTimeout(() => ripple.remove(), 800);
             });
         });
     </script>
