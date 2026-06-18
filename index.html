@@ -28,13 +28,26 @@
             overflow-x: hidden;
         }
 
+        /* =========================================
+           FONDO DINÁMICO QUE CAMBIA DE COLOR
+        ========================================= */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
             font-family: 'Roboto Condensed', sans-serif;
             perspective: 1200px;
+            /* Degradado expandido con nuevos colores mágicos */
+            background: linear-gradient(45deg, #89f7fe, #66a6ff, #a1c4fd, #c2e9fb, #89f7fe);
+            background-size: 400% 400%;
+            /* Animación que hace que el fondo cambie cada ciertos segundos */
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Contenedor fijo para que las partículas no dañen el scroll */
@@ -542,7 +555,7 @@
          AUDIOS MÁGICOS
     ========================================= -->
     <audio id="bg-music" loop style="display: none;">
-        <source src="musica.mp3.mp3" type="audio/mpeg">
+        <source src="musica.mp3" type="audio/mpeg">
     </audio>
     <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
     <audio id="magic-sound" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
@@ -566,7 +579,6 @@
             <div class="baby-icon" style="left: 15%; animation-delay: 0s">🎈</div>
             <div class="baby-icon" style="left: 35%; animation-delay: 0.4s">🎂</div>
             <div class="baby-icon" style="left: 55%; animation-delay: 0.8s">🎁</div>
-            <!-- Cambiado también aquí para que coincida -->
             <div class="baby-icon" style="left: 75%; animation-delay: 1.2s">🕯️</div>
             <div class="baby-icon" style="left: 90%; animation-delay: 1.6s">🎈</div>
         </div>
@@ -599,7 +611,6 @@
                         Estoy muy emocionado de invitarte a mi primer año de vida. Será un día lleno de magia, dulces y diversión en mi pequeño reino.
                     </div>
                     <div class="detail-item">
-                        <!-- Reemplazo de la corona por pastel de velas -->
                         🎂 Mi primer año<br>
                         📅 Sábado 15 de agosto de 2026<br><br>
                         ¡Prepara tu mejor sonrisa porque la pasaremos increíble!
@@ -641,14 +652,25 @@
             }
         }
 
-        // 2. FUNCIÓN DE REPRODUCCIÓN DE SONIDO
+        // 2. SISTEMA ROBUSTO DE REPRODUCCIÓN DE AUDIO
+        const bgMusic = document.getElementById('bg-music');
+
         function playSound(id) {
             const sound = document.getElementById(id);
             if(sound) {
                 let playPromise = sound.cloneNode().play(); 
                 if (playPromise !== undefined) {
+                    playPromise.catch(error => {});
+                }
+            }
+        }
+
+        function playBackgroundMusic() {
+            if (bgMusic.paused) {
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        console.log("Audio bloqueado por el navegador, requiere interacción.");
+                        console.log("Audio bloqueado, requiere interacción del usuario.");
                     });
                 }
             }
@@ -667,17 +689,30 @@
             }, 600);
         }
 
-        // 4. RETIRAR PANTALLA DE CARGA Y PONER MÚSICA
+        // 4. RETIRAR PANTALLA DE CARGA Y GESTIÓN DE AUDIO AL REGRESAR
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.querySelector('.loader').remove();
-                try { 
-                    document.getElementById('bg-music').play(); 
-                } catch (e) {
-                    console.log("Música de fondo bloqueada, inicie con clic.");
-                }
+                playBackgroundMusic();
             }, 2500); 
         });
+
+        // VIGILANTE: Si regresas del mapa, vuelve a encender la música
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden) {
+                playBackgroundMusic();
+            }
+        });
+
+        // VIGILANTE: Si regresas usando el botón "Atrás" del celular
+        window.addEventListener('pageshow', (event) => {
+            playBackgroundMusic();
+        });
+
+        // Asegurarse de que cualquier clic en la pantalla inicie la música si fue bloqueada
+        document.body.addEventListener('click', () => {
+            playBackgroundMusic();
+        }, { once: true });
 
         // 5. GENERACIÓN DE PARTÍCULAS
         function createEffects() {
@@ -750,7 +785,6 @@
 
         function magneticPhysicsLoop() {
             if(isMouseMoving) {
-                // Seleccionamos todas las partículas
                 document.querySelectorAll('.confetti, .square-effect, .bubble').forEach(el => {
                     const rect = el.getBoundingClientRect();
                     const elX = rect.left + rect.width / 2;
@@ -760,30 +794,26 @@
                     const dy = mouseY - elY;
                     const distance = Math.sqrt(dx*dx + dy*dy);
                     
-                    // Si el cursor está cerca (Radio de atracción de 250px)
                     if(distance < 250) {
-                        const force = (250 - distance) / 250; // Fuerza magnética
+                        const force = (250 - distance) / 250; 
                         
                         let currentMX = parseFloat(el.style.marginLeft) || 0;
                         let currentMY = parseFloat(el.style.marginTop) || 0;
                         
-                        // Empujar hacia el cursor usando márgenes (sin romper animación CSS)
                         el.style.marginLeft = (currentMX + (dx * force * 0.15)) + 'px';
                         el.style.marginTop = (currentMY + (dy * force * 0.15)) + 'px';
                     }
                 });
             }
-            requestAnimationFrame(magneticPhysicsLoop); // Repetir infinitamente a 60fps
+            requestAnimationFrame(magneticPhysicsLoop); 
         }
         
-        // Iniciar físicas
         magneticPhysicsLoop();
 
         // 7. INICIAR EVENTOS GENERALES Y RIPPLES
         document.addEventListener('DOMContentLoaded', () => {
             createEffects();
             
-            // Clic general a la tarjeta (Sonido Pop y Latido)
             const card = document.getElementById('main-card');
             card.addEventListener('click', function(e) {
                 if(!e.target.closest('.detail-item') && !e.target.closest('.koala-container') && !e.target.closest('.title')) {
@@ -793,7 +823,6 @@
                 }
             });
 
-            // Regenerar confeti cuando falte
             setInterval(() => { 
                 if (document.querySelectorAll('.confetti').length < 90) {
                     createEffects(); 
@@ -818,7 +847,6 @@
                 
                 item.appendChild(ripple);
                 
-                // Remover el div después de que termine su animación CSS (800ms)
                 setTimeout(() => ripple.remove(), 800); 
             });
         });
