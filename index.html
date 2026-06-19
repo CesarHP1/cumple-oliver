@@ -167,6 +167,16 @@
             padding: 20px;
             box-sizing: border-box;
             perspective: 1200px;
+            /* NUEVO: estado inicial oculto — se revela con el efecto de materialización */
+            opacity: 0;
+            transform: scale(0.55) translateY(50px);
+            filter: blur(20px) brightness(2.6);
+            will-change: opacity, transform, filter;
+        }
+
+        /* NUEVO: clase que activa el efecto holográfico al aparecer */
+        .card-container.materialize-in {
+            animation: hologramMaterialize 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         .invitation-card {
@@ -203,9 +213,52 @@
         }
 
         /* =========================================
-           7. LÍQUIDO DENTRO DE LA TARJETA (NUEVO)
-              Dos blobs CSS animados crean la ilusión
-              de agua acumulada en el fondo de la tarjeta
+           6b. EFECTO DE MATERIALIZACIÓN (NUEVO)
+              Destello de portal + chispas que estallan
+              en el instante en que la tarjeta aparece
+        ========================================= */
+        .materialize-flash {
+            position: fixed;
+            top: 50%; left: 50%;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(255,255,255,1) 0%,
+                rgba(160,210,255,0.85) 35%,
+                rgba(79,172,254,0.4) 60%,
+                transparent 75%
+            );
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 4;
+            mix-blend-mode: screen;
+        }
+
+        .materialize-flash.burst {
+            animation: flashBurst 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .materialize-sparkle {
+            position: fixed;
+            top: 38%; left: 50%;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow:
+                0 0 8px 2px rgba(255,255,255,0.9),
+                0 0 16px 4px rgba(79,172,254,0.6);
+            pointer-events: none;
+            z-index: 6;
+            opacity: 0;
+        }
+
+        .materialize-sparkle.fire {
+            animation: sparkleOut 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        /* =========================================
+           7. LÍQUIDO DENTRO DE LA TARJETA
         ========================================= */
         .card-liquid-fill {
             position: absolute;
@@ -338,7 +391,7 @@
         }
 
         /* =========================================
-           11. BADGE FAMILIAR (NUEVO)
+           11. BADGE FAMILIAR
         ========================================= */
         .family-badge {
             display: inline-flex;
@@ -597,6 +650,64 @@
             66%      { transform: translateX(-3%) rotate(-1deg)   scaleX(1.02); }
         }
 
+        /* ---- NUEVO: Materialización holográfica de la tarjeta ---- */
+        @keyframes hologramMaterialize {
+            0% {
+                opacity: 0;
+                transform: scale(0.55) translateY(50px);
+                filter: blur(20px) brightness(2.6);
+            }
+            10% {
+                opacity: 0.55;
+                transform: scale(0.7) translateY(35px);
+                filter: blur(16px) brightness(2.4);
+            }
+            22% {
+                opacity: 0.15;
+                transform: scale(0.82) translateY(22px);
+                filter: blur(11px) brightness(2.1);
+            }
+            34% {
+                opacity: 0.8;
+                transform: scale(0.95) translateY(10px);
+                filter: blur(6px) brightness(1.8);
+            }
+            46% {
+                opacity: 0.35;
+                transform: scale(1.05) translateY(2px);
+                filter: blur(4px) brightness(1.6);
+            }
+            60% {
+                opacity: 0.92;
+                transform: scale(0.99) translateY(-2px);
+                filter: blur(2px) brightness(1.25);
+            }
+            78% {
+                opacity: 0.7;
+                filter: blur(1px) brightness(1.4);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0) brightness(1);
+            }
+        }
+
+        /* ---- NUEVO: Destello del portal mágico ---- */
+        @keyframes flashBurst {
+            0%   { transform: translate(-50%, -50%) scale(0);  opacity: 0;   }
+            8%   { opacity: 1; }
+            35%  { transform: translate(-50%, -50%) scale(14); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(26); opacity: 0;   }
+        }
+
+        /* ---- NUEVO: Chispas que estallan hacia afuera ---- */
+        @keyframes sparkleOut {
+            0%   { transform: translate(-50%, -50%) translate(0, 0) scale(0.4); opacity: 1; }
+            70%  { opacity: 1; }
+            100% { transform: translate(-50%, -50%) translate(var(--sx), var(--sy)) scale(0.1); opacity: 0; }
+        }
+
         /* =========================================
            17. RESPONSIVE
         ========================================= */
@@ -619,6 +730,22 @@
         @media (min-width: 768px) and (max-width: 1024px) {
             .card-container   { max-width: 560px; }
             .title            { font-size: clamp(2em, 4vw, 2.8em); }
+        }
+
+        /* =========================================
+           18. ACCESIBILIDAD: RESPETA "REDUCIR MOVIMIENTO" (NUEVO)
+        ========================================= */
+        @media (prefers-reduced-motion: reduce) {
+            .card-container {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+                animation: none !important;
+            }
+            .materialize-flash,
+            .materialize-sparkle {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -661,17 +788,20 @@
         <div class="loader-text">Preparando la Magia...</div>
     </div>
 
+    <!-- NUEVO: destello del portal mágico (se activa por JS al materializar) -->
+    <div class="materialize-flash" id="materialize-flash"></div>
+
     <!-- =========================================
          TARJETA PRINCIPAL
     ========================================= -->
-    <div class="card-container">
+    <div class="card-container" id="card-container">
         <div class="invitation-card" id="main-card">
 
             <!-- Olas hover dentro de la tarjeta -->
             <div class="card-water-wave"></div>
             <div class="card-water-wave wave-2"></div>
 
-            <!-- NUEVO: Líquido realista en el fondo de la tarjeta -->
+            <!-- Líquido realista en el fondo de la tarjeta -->
             <div class="card-liquid-fill">
                 <div class="liquid-blob"></div>
                 <div class="liquid-blob-2"></div>
@@ -681,14 +811,14 @@
 
                 <h1 class="title" id="animated-title">¡El Reinado de Oliver!</h1>
 
-                <!-- NUEVO: Badge familiar -->
+                <!-- Badge familiar -->
                 <div class="family-badge">
                     👨‍👩‍👧‍👦 &nbsp;¡Invitación para toda la familia!
                 </div>
 
                 <div class="details">
 
-                    <!-- TEXTO FAMILIAR (reescrito) -->
+                    <!-- Texto familiar -->
                     <div class="detail-item">
                         Con el corazón lleno de amor y alegría, queremos invitar a toda nuestra familia a celebrar juntos este momento tan especial: ¡el primer añito de vida de Oliver! Será un día lleno de risas, abrazos, magia y recuerdos que guardaremos para siempre. 🌟
                     </div>
@@ -776,12 +906,53 @@
             setTimeout(() => { window.location.href = urlUbicacion; }, 600);
         }
 
-        /* -------- 4. QUITAR LOADER -------- */
+        /* -------- 4. RETIRAR PANTALLA DE CARGA + MATERIALIZAR TARJETA (NUEVO) -------- */
         window.addEventListener('load', () => {
-            setTimeout(() => { document.querySelector('.loader').remove(); }, 2500);
+            setTimeout(() => {
+                document.querySelector('.loader').remove();
+                // Tras quitar el loader solo se ve el fondo unos instantes,
+                // luego la tarjeta se materializa con el efecto holográfico
+                setTimeout(materializeCard, 1600);
+            }, 2500);
         });
 
-        /* -------- 5. PARTÍCULAS -------- */
+        /* -------- 4b. EFECTO DE MATERIALIZACIÓN HOLOGRÁFICA (NUEVO) -------- */
+        function materializeCard() {
+            const flash = document.getElementById('materialize-flash');
+            flash.classList.add('burst');
+
+            createMaterializeSparkles();
+            playSound('magic-sound');
+
+            const cardContainer = document.getElementById('card-container');
+            cardContainer.classList.add('materialize-in');
+        }
+
+        function createMaterializeSparkles() {
+            const total = 26;
+            for (let i = 0; i < total; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'materialize-sparkle';
+
+                const angle = (Math.PI * 2 * i) / total + (Math.random() * 0.3 - 0.15);
+                const dist  = 90 + Math.random() * 160;
+                const sx    = Math.cos(angle) * dist;
+                const sy    = Math.sin(angle) * dist;
+
+                sparkle.style.setProperty('--sx', sx + 'px');
+                sparkle.style.setProperty('--sy', sy + 'px');
+
+                const size = 4 + Math.random() * 5;
+                sparkle.style.width  = size + 'px';
+                sparkle.style.height = size + 'px';
+
+                document.body.appendChild(sparkle);
+                requestAnimationFrame(() => sparkle.classList.add('fire'));
+                setTimeout(() => sparkle.remove(), 950);
+            }
+        }
+
+        /* -------- 5. GENERACIÓN DE PARTÍCULAS -------- */
         function createEffects() {
             const colors = ['#4facfe','#00f2fe','#ffb703','#ffffff','#e0eafc','#fbc2eb'];
             const container = document.getElementById('effects-container');
